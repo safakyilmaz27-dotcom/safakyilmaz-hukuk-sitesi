@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İletişim | Av. Şafak Yılmaz</title>
+  <meta name="description" content="Adres, telefon, e-posta ve büromuzun konumu. Mesaj formu ile bize ulaşabilirsiniz." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="contact">
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">⚖</div>
+      <div class="logo-text">Av. Şafak Yılmaz<span>Hukuk Bürosu</span></div>
+    </a>
+    <button class="nav-toggle" aria-label="Menüyü aç" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Anasayfa</a></li>
+      <li><a href="hizmetler.html">Hizmetler</a></li>
+      <li><a href="makaleler.html">Makaleler</a></li>
+      <li><a href="hakkimizda.html">Hakkımızda</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
+      <li><a href="randevu.html" class="cta">Randevu Al</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="tag" style="color:var(--gold-light);">İletişim</div>
+  <h1>Bizimle İletişime Geçin</h1>
+  <p>Hukuki konularınız için randevu alabilir, sorularınızı iletebilirsiniz.</p>
+</header>
+
+<section>
+  <div class="container">
+    <div class="contact-grid">
+      <div class="cinfo">
+        <h3>Büro Bilgileri</h3>
+        <p class="sub">Telefonla veya online randevu formu üzerinden iletişime geçebilirsiniz.</p>
+        <div class="cdetail">
+          <div class="cicon">📍</div>
+          <div>
+            <h5>Adres</h5>
+            <p>Levent Mah. Büyükdere Cad. No:123<br />Şişli / İstanbul</p>
+          </div>
+        </div>
+        <div class="cdetail">
+          <div class="cicon">📞</div>
+          <div>
+            <h5>Telefon</h5>
+            <p><a href="tel:+902120000000" style="color:inherit; text-decoration:none;">+90 212 000 00 00</a></p>
+          </div>
+        </div>
+        <div class="cdetail">
+          <div class="cicon">✉️</div>
+          <div>
+            <h5>E-posta</h5>
+            <p><a href="mailto:info@safakyilmazlaw.com" style="color:inherit; text-decoration:none;">info@safakyilmazlaw.com</a></p>
+          </div>
+        </div>
+        <div class="cdetail">
+          <div class="cicon">🕐</div>
+          <div>
+            <h5>Çalışma Saatleri</h5>
+            <p>Pazartesi – Cuma: 09:00 – 18:00<br />Cumartesi: Randevuyla</p>
+          </div>
+        </div>
+        <div class="map-wrap" style="margin-top:1.5rem;">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=29.005%2C41.075%2C29.025%2C41.085&amp;layer=mapnik&amp;marker=41.080%2C29.015"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Büro konumu"></iframe>
+        </div>
+      </div>
+
+      <div class="cform">
+        <h3>Mesaj Gönderin</h3>
+        <form id="contact-form" onsubmit="return sendContact(event)">
+          <div class="frow">
+            <div class="fg">
+              <label>Ad *</label>
+              <input type="text" name="name" required placeholder="Adınız" />
+            </div>
+            <div class="fg">
+              <label>Soyad *</label>
+              <input type="text" name="surname" required placeholder="Soyadınız" />
+            </div>
+          </div>
+          <div class="fg">
+            <label>E-posta *</label>
+            <input type="email" name="email" required placeholder="ornek@eposta.com" />
+          </div>
+          <div class="fg">
+            <label>Telefon</label>
+            <input type="tel" name="phone" placeholder="+90 5xx xxx xx xx" />
+          </div>
+          <div class="fg">
+            <label>Konu *</label>
+            <input type="text" name="subject" required placeholder="Mesajınızın konusu" />
+          </div>
+          <div class="fg">
+            <label>Mesajınız *</label>
+            <textarea name="message" required placeholder="Lütfen konuyu detaylandırın..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold btn-block">Mesajı Gönder</button>
+          <div id="contact-ok" class="ok-msg">✓ Mesajınız tarafımıza ulaştı, en kısa sürede dönüş yapacağız.</div>
+          <p class="fnote">* zorunlu alanlar — bu form müvekkillik ilişkisi kurmaz.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">⚖</div>
+      <div class="logo-text">Av. Şafak Yılmaz<span>Hukuk Bürosu</span></div>
+    </a>
+    <p>© 2026 Av. Şafak Yılmaz Hukuk Bürosu. Tüm hakları saklıdır.</p>
+    <ul class="footer-links">
+      <li><a href="hizmetler.html">Hizmetler</a></li>
+      <li><a href="makaleler.html">Makaleler</a></li>
+      <li><a href="hakkimizda.html">Hakkımızda</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  function sendContact(e) {
+    e.preventDefault();
+    const form = e.target;
+    const fd = new FormData(form);
+    const msg = {
+      name: (fd.get('name') || '').toString(),
+      surname: (fd.get('surname') || '').toString(),
+      email: (fd.get('email') || '').toString(),
+      phone: (fd.get('phone') || '').toString(),
+      subject: (fd.get('subject') || '').toString(),
+      message: (fd.get('message') || '').toString(),
+      createdAt: new Date().toISOString()
+    };
+    try {
+      const raw = localStorage.getItem('sy_messages');
+      const list = raw ? JSON.parse(raw) : [];
+      list.push(msg);
+      localStorage.setItem('sy_messages', JSON.stringify(list));
+    } catch (err) { /* ignore storage errors */ }
+    const ok = document.getElementById('contact-ok');
+    ok.style.display = 'block';
+    form.reset();
+    setTimeout(function () { ok.style.display = 'none'; }, 5000);
+    return false;
+  }
+</script>
+</body>
+</html>

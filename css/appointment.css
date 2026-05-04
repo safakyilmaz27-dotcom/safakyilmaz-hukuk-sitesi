@@ -1,0 +1,329 @@
+/* === Appointment 4-step flow === */
+.appointment-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Steps progress bar */
+.steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.step {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: .78rem;
+  color: var(--gray);
+}
+.step .step-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--border);
+  color: var(--gray);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto .45rem;
+  font-weight: 700;
+  font-size: .9rem;
+  transition: all .25s;
+}
+.step.active .step-num {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+  box-shadow: 0 0 0 4px rgba(184,151,58,.18);
+}
+.step.active { color: var(--navy); font-weight: 700; }
+.step.done .step-num {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.step.done .step-num::before { content: "✓"; }
+.step.done .step-num span { display: none; }
+
+.step-panel {
+  display: none;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,.05);
+}
+.step-panel.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.step-panel h3 {
+  font-size: 1.15rem;
+  color: var(--navy);
+  margin-bottom: .4rem;
+}
+.step-panel .step-sub {
+  font-family: sans-serif;
+  font-size: .87rem;
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+/* Step 1: Areas */
+.area-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: .8rem;
+}
+.area-btn {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1rem;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: .87rem;
+  color: var(--text);
+  transition: all .2s;
+  text-align: left;
+  display: flex; align-items: center; gap: .7rem;
+}
+.area-btn .area-icon { font-size: 1.2rem; }
+.area-btn:hover {
+  border-color: var(--gold);
+  background: rgba(184,151,58,.06);
+}
+.area-btn.selected {
+  border-color: var(--gold);
+  background: rgba(184,151,58,.12);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+/* Step 2: Calendar */
+.cal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1.2rem;
+}
+.cal-header h4 {
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+.cal-nav {
+  display: flex; gap: .5rem;
+}
+.cal-nav button {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 36px; height: 36px;
+  cursor: pointer;
+  font-family: sans-serif;
+  color: var(--gray-dark);
+  transition: all .2s;
+}
+.cal-nav button:hover:not(:disabled) {
+  border-color: var(--gold); color: var(--gold);
+}
+.cal-nav button:disabled {
+  opacity: .4; cursor: not-allowed;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: .35rem;
+}
+.cal-dow {
+  font-family: sans-serif;
+  font-size: .7rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  text-align: center;
+  padding: .5rem 0;
+  font-weight: 700;
+}
+.cal-day {
+  aspect-ratio: 1;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: .9rem;
+  color: var(--text);
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 500;
+}
+.cal-day:hover:not(:disabled):not(.empty) {
+  border-color: var(--gold);
+  background: rgba(184,151,58,.08);
+}
+.cal-day.selected {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+}
+.cal-day.today {
+  border-color: var(--navy);
+  font-weight: 700;
+}
+.cal-day:disabled, .cal-day.disabled {
+  background: var(--light);
+  color: #c5beb0;
+  cursor: not-allowed;
+  border-color: var(--border);
+  text-decoration: line-through;
+  text-decoration-color: rgba(0,0,0,.15);
+}
+.cal-day.empty { background: transparent; border: none; cursor: default; }
+
+.cal-legend {
+  display: flex; gap: 1.2rem; flex-wrap: wrap;
+  margin-top: 1.2rem;
+  font-family: sans-serif;
+  font-size: .73rem;
+  color: var(--gray);
+}
+.cal-legend span {
+  display: inline-flex; align-items: center; gap: .35rem;
+}
+.cal-legend i {
+  width: 12px; height: 12px; border-radius: 3px;
+  display: inline-block;
+}
+.cal-legend .lg-avail { background: #fff; border: 1px solid var(--border); }
+.cal-legend .lg-sel { background: var(--gold); }
+.cal-legend .lg-disabled { background: var(--light); border: 1px solid var(--border); }
+
+/* Step 3: Slots */
+.slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: .7rem;
+}
+.slot {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .9rem;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: .95rem;
+  color: var(--text);
+  transition: all .2s;
+  font-weight: 500;
+}
+.slot:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: rgba(184,151,58,.08);
+}
+.slot.selected {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+}
+.slot:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  background: var(--light);
+  text-decoration: line-through;
+}
+
+/* Step navigation */
+.step-actions {
+  display: flex; justify-content: space-between;
+  margin-top: 1.8rem;
+  gap: 1rem;
+}
+.step-actions .btn { padding: .75rem 1.6rem; font-size: .85rem; }
+.step-actions .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Summary card */
+.summary-card {
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3rem 2rem;
+}
+.summary-card .check-circle {
+  width: 80px; height: 80px;
+  background: rgba(46,125,50,.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+  color: #2e7d32;
+  margin: 0 auto 1.5rem;
+}
+.summary-card h3 {
+  font-size: 1.4rem;
+  color: var(--navy);
+  margin-bottom: .6rem;
+}
+.summary-card .summary-sub {
+  font-family: sans-serif;
+  font-size: .9rem;
+  color: var(--gray);
+  margin-bottom: 2rem;
+}
+.summary-list {
+  text-align: left;
+  background: var(--light);
+  border-radius: 8px;
+  padding: 1.4rem;
+  margin: 0 auto 2rem;
+  max-width: 460px;
+}
+.summary-list dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: .55rem 1.4rem;
+  font-family: sans-serif;
+  font-size: .9rem;
+}
+.summary-list dt { color: var(--gray); }
+.summary-list dd { color: var(--navy); font-weight: 600; }
+
+.summary-card .actions {
+  display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap;
+}
+
+.note-box {
+  background: rgba(184,151,58,.1);
+  border: 1px solid rgba(184,151,58,.3);
+  border-radius: 6px;
+  padding: .9rem 1rem;
+  font-family: sans-serif;
+  font-size: .82rem;
+  color: var(--gray-dark);
+  margin-top: 1.2rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 600px) {
+  .steps { font-size: .68rem; }
+  .step .step-num { width: 30px; height: 30px; font-size: .8rem; }
+  .step-panel { padding: 1.4rem; }
+  .cal-day { font-size: .82rem; }
+  .step-actions { flex-direction: column-reverse; }
+  .step-actions .btn { width: 100%; }
+}

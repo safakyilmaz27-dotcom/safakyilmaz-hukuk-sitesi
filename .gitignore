@@ -1,0 +1,14 @@
+# Claude Code local settings
+.claude/
+
+# Local dev artifacts
+.httpsrv.pid
+*.log
+node_modules/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
