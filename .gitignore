@@ -6,6 +6,13 @@
 *.log
 node_modules/
 
+# Test/preview artifacts
+.playwright-mcp/
+home-full.png
+home-hero.png
+articles.png
+randevu.png
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db
