@@ -16,7 +16,17 @@
     { key: 'miras',     label: 'Miras Hukuku',         icon: '🌍' },
     { key: 'fikri',     label: 'Fikri Mülkiyet',       icon: '💡' }
   ];
-  const TIME_SLOTS = ['10:00', '11:00', '14:00', '15:00', '16:00'];
+  // 13:00 öncesi saatler randevuya kapalıdır; listede 'Dolu' olarak gösterilir.
+  const TIME_SLOTS = [
+    { time: '10:00', bookable: false },
+    { time: '11:00', bookable: false },
+    { time: '12:00', bookable: false },
+    { time: '14:00', bookable: true },
+    { time: '15:00', bookable: true },
+    { time: '16:00', bookable: true },
+    { time: '17:00', bookable: true }
+  ];
+  const BOOKABLE_SLOTS = TIME_SLOTS.filter(function (s) { return s.bookable; });
   const STORAGE_KEY = 'sy_booked';
   const DOW = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
   const MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
@@ -43,12 +53,15 @@
     list.push(b);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
   }
+  function isBookableTime(time) {
+    return BOOKABLE_SLOTS.some(function (s) { return s.time === time; });
+  }
   function isSlotTaken(dateIso, time) {
     return getBooked().some(function (b) { return b.date === dateIso && b.time === time; });
   }
   function isDayFull(dateIso) {
     const taken = getBooked().filter(function (b) { return b.date === dateIso; });
-    return taken.length >= TIME_SLOTS.length;
+    return taken.length >= BOOKABLE_SLOTS.length;
   }
 
   function isoDate(d) {
@@ -183,11 +196,13 @@
     const dateLbl = document.getElementById('slots-date');
     if (!wrap) return;
     if (dateLbl) dateLbl.textContent = utils.formatDate(state.date);
-    wrap.innerHTML = TIME_SLOTS.map(function (t) {
-      const taken = isSlotTaken(state.date, t);
+    wrap.innerHTML = TIME_SLOTS.map(function (slot) {
+      const t = slot.time;
+      const taken = !slot.bookable || isSlotTaken(state.date, t);
       const sel = state.time === t ? ' selected' : '';
+      const label = slot.bookable ? t : t + ' · Dolu';
       return '<button type="button" class="slot' + sel + '" data-time="' + t + '"'
-        + (taken ? ' disabled' : '') + '>' + t + '</button>';
+        + (taken ? ' disabled' : '') + '>' + label + '</button>';
     }).join('');
     wrap.querySelectorAll('.slot:not(:disabled)').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -215,7 +230,7 @@
         note: (fd.get('note') || '').toString().trim()
       };
       // Race-check: someone may have booked the slot in another tab between steps
-      if (isSlotTaken(state.date, state.time)) {
+      if (!isBookableTime(state.time) || isSlotTaken(state.date, state.time)) {
         alert('Üzgünüz, bu saat dilimi az önce dolduruldu. Lütfen başka bir saat seçin.');
         goStep(3);
         renderSlots();
