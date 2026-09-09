@@ -22,10 +22,13 @@
       });
     });
 
-    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const normalize = function (p) {
+      return p.toLowerCase().replace(/\.html$/, '').replace(/\/$/, '') || '/';
+    };
+    const path = normalize(location.pathname.split('?')[0]);
     links.querySelectorAll('a').forEach(function (a) {
-      const href = (a.getAttribute('href') || '').toLowerCase();
-      if (href === path || (path === '' && href === 'index.html')) {
+      const href = normalize((a.getAttribute('href') || '').split('#')[0].split('?')[0]);
+      if (href === path) {
         a.classList.add('active');
       }
     });

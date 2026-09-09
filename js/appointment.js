@@ -269,8 +269,8 @@
       +   '<dt>E-posta</dt><dd>' + utils.escapeHtml(b.email) + '</dd>'
       + '</dl></div>'
       + '<div class="actions">'
-      +   '<a class="btn btn-ghost" href="randevu.html">Yeni Randevu</a>'
-      +   '<a class="btn btn-gold" href="index.html">Anasayfa</a>'
+      +   '<a class="btn btn-ghost" href="/randevu">Yeni Randevu</a>'
+      +   '<a class="btn btn-gold" href="/">Anasayfa</a>'
       + '</div></div>';
     document.querySelectorAll('.step-panel').forEach(function (p) { p.classList.remove('active'); });
     document.getElementById('panel-summary').classList.add('active');

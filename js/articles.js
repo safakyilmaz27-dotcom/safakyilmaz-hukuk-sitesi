@@ -18,7 +18,7 @@
 
   function articleCardHTML(a) {
     return ''
-      + '<a class="article-card" href="makale.html?id=' + encodeURIComponent(a.id) + '">'
+      + '<a class="article-card" href="/makale?id=' + encodeURIComponent(a.id) + '">'
       +   '<div class="article-meta">'
       +     '<span class="cat-chip">' + utils.escapeHtml(a.category) + '</span>'
       +     '<span class="dot">•</span>'
@@ -114,13 +114,26 @@
         '<div class="empty-state">'
         + '<h3 style="color:var(--navy); margin-bottom:.6rem;">Makale Bulunamadı</h3>'
         + '<p>Aradığınız makale mevcut değil veya kaldırılmış olabilir.</p>'
-        + '<p style="margin-top:1rem;"><a class="btn btn-ghost" href="makaleler.html">Tüm Makaleler</a></p>'
+        + '<p style="margin-top:1rem;"><a class="btn btn-ghost" href="/makaleler">Tüm Makaleler</a></p>'
         + '</div>';
       document.title = 'Makale bulunamadı | Av. Şafak Yılmaz';
       return;
     }
 
     document.title = article.title + ' | Av. Şafak Yılmaz';
+
+    const canonicalUrl = 'https://avukatsafakyilmaz.com/makale?id=' + encodeURIComponent(article.id);
+    let canonicalEl = document.querySelector('link[rel="canonical"]');
+    if (!canonicalEl) {
+      canonicalEl = document.createElement('link');
+      canonicalEl.rel = 'canonical';
+      document.head.appendChild(canonicalEl);
+    }
+    canonicalEl.href = canonicalUrl;
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.content = canonicalUrl;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && article.summary) metaDesc.content = article.summary;
 
     let sourcesHTML = '';
     if (article.sources && article.sources.length) {
@@ -150,7 +163,7 @@
       +   sourcesHTML
       +   '<div class="cta-bar">'
       +     '<p>Bu konuda hukuki destek almak ister misiniz?</p>'
-      +     '<a class="btn btn-gold" href="randevu.html">Randevu Talep Et</a>'
+      +     '<a class="btn btn-gold" href="/randevu">Randevu Talep Et</a>'
       +   '</div>'
       + '</article>';
 
