@@ -25,18 +25,25 @@ const server = http.createServer((req, res) => {
   if (!filePath.startsWith(ROOT)) {
     res.writeHead(403); res.end('Forbidden'); return;
   }
-  fs.stat(filePath, (err, stat) => {
+  // Cloudflare Pages gibi uzantisiz URL'leri de karsila: /hizmetler -> hizmetler.html
+  const candidates = [filePath];
+  if (!path.extname(filePath)) candidates.push(filePath + '.html');
+  const resolved = candidates.find((p) => {
+    try { return fs.statSync(p).isFile(); } catch (e) { return false; }
+  });
+
+  fs.stat(resolved || filePath, (err, stat) => {
     if (err || !stat.isFile()) {
       res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end('404 Not Found: ' + pathname);
       return;
     }
-    const ext = path.extname(filePath).toLowerCase();
+    const ext = path.extname(resolved).toLowerCase();
     res.writeHead(200, {
       'Content-Type': MIME[ext] || 'application/octet-stream',
       'Cache-Control': 'no-store'
     });
-    fs.createReadStream(filePath).pipe(res);
+    fs.createReadStream(resolved).pipe(res);
   });
 });
 
