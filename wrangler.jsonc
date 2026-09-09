@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers - statik site (assets) yapılandırması
+  "name": "safakyilmaz-hukuk-sitesi",
+  "compatibility_date": "2026-09-09",
+  "assets": {
+    "directory": "./",
+    // /hizmetler -> hizmetler.html, /hizmetler.html -> /hizmetler yönlendirmesi
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

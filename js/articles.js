@@ -9,7 +9,7 @@
   let currentSearch = '';
 
   function fetchArticles() {
-    return fetch('data/articles.json', { cache: 'no-cache' })
+    return fetch('/data/articles.json', { cache: 'no-cache' })
       .then(function (r) {
         if (!r.ok) throw new Error('JSON load failed: ' + r.status);
         return r.json();

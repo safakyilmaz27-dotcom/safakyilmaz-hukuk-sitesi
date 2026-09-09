@@ -1,0 +1,12 @@
+# Siteye ait olmayan dosyalar yayınlanmasın
+wrangler.jsonc
+.assetsignore
+.server.js
+.httpsrv.pid
+README.md
+.gitignore
+.claude
+home-full.png
+home-hero.png
+articles.png
+randevu.png
