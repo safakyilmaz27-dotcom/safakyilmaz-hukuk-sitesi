@@ -18,7 +18,7 @@
 
   function articleCardHTML(a) {
     return ''
-      + '<a class="article-card" href="/makale?id=' + encodeURIComponent(a.id) + '">'
+      + '<a class="article-card" href="/makaleler/' + encodeURIComponent(a.slug || a.id) + '">'
       +   '<div class="article-meta">'
       +     '<span class="cat-chip">' + utils.escapeHtml(a.category) + '</span>'
       +     '<span class="dot">•</span>'
